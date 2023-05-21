@@ -19,6 +19,8 @@ export class CatsController {
 
   @Get(':id')
   findOne(@Param() params: { id: string }): string {
-    return `This action returns a #${params.id} cat. Type of ID is ${typeof params.id}`;
+    return `This action returns a #${
+      params.id
+    } cat. Type of ID is ${typeof params.id}`;
   }
 }

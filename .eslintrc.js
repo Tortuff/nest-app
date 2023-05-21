@@ -21,16 +21,18 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto',
-        // parser: 'typescript',
         singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-        printWidth: 120,
-        tabWidth: 2,
-        semi: true,
-        tabWidth: 2,
+        printWidth: 100,
       },
     ],
   },
 };
+
+
+
+
+
+
+
+
+
