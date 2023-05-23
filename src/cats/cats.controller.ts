@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, Post, UseFilters } from '@nestjs/common';
 import { CatsService } from 'src/cats/cats.service';
-import { Cat } from 'src/cats/interfaces/cat.interface';
+import { HttpExceptionFilter } from 'src/shared/filters/http-exception.filter';
 import { CatCreateDto } from './dto/cat-create.dto';
 
 @Controller('cats')
@@ -8,7 +8,10 @@ export class CatsController {
   constructor(private catSevice: CatsService) {}
 
   @Get()
-  findAll(): Cat[] {
+  @UseFilters(HttpExceptionFilter)
+  findAll(): any {
+    //throw new ForbiddenException();
+    //throw new HttpException('Some custom message', HttpStatus.FORBIDDEN);
     return this.catSevice.findAll();
   }
 
@@ -19,8 +22,7 @@ export class CatsController {
 
   @Get(':id')
   findOne(@Param() params: { id: string }): string {
-    return `This action returns a #${
-      params.id
-    } cat. Type of ID is ${typeof params.id}`;
+    //throw new Error('Unexpected error');
+    return `This action returns a #${params.id} cat. Type of ID is ${typeof params.id}`;
   }
 }

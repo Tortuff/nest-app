@@ -22,7 +22,6 @@ module.exports = {
       'error',
       {
         singleQuote: true,
-        printWidth: 100,
       },
     ],
   },
