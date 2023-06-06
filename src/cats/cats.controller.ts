@@ -7,11 +7,13 @@ import {
   Post,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CatsService } from 'src/cats/cats.service';
-import { Roles } from 'src/shared/decorators/roles.decorator';
 import { HttpExceptionFilter } from 'src/shared/filters/http-exception.filter';
 import { RolesGuard } from 'src/shared/guards/roles.guard';
+import { LoggingInterceptor } from 'src/shared/interseptors/logging.interceptor';
+import { TransformInterceptor } from 'src/shared/interseptors/transform.interceptor';
 import { CustomParseIntPipe } from 'src/shared/pipes/custom-parse-int.pipe';
 import { ValidationPipe } from 'src/shared/pipes/validation.pipe';
 import { CatCreateDto } from './dto/cat-create.dto';
@@ -23,13 +25,15 @@ export class CatsController {
 
   @Get()
   @UseFilters(HttpExceptionFilter)
+  @UseInterceptors(TransformInterceptor<Cat>)
   findAll(): any {
     //throw new ForbiddenException();
     return this.catSevice.findAll();
   }
 
   @Post()
-  @Roles('admin')
+  @UseInterceptors(LoggingInterceptor)
+  // @Roles('admin')
   // @UsePipes(new JoiValidationPipe(CreateCatSchema))
   async create(@Body(new ValidationPipe()) createCatDto: CatCreateDto): Promise<Cat> {
     const dto = { ...createCatDto, id: Math.floor(Math.random() * 1000000) };
