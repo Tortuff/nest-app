@@ -6,9 +6,12 @@ import {
   Param,
   Post,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { CatsService } from 'src/cats/cats.service';
+import { Roles } from 'src/shared/decorators/roles.decorator';
 import { HttpExceptionFilter } from 'src/shared/filters/http-exception.filter';
+import { RolesGuard } from 'src/shared/guards/roles.guard';
 import { CustomParseIntPipe } from 'src/shared/pipes/custom-parse-int.pipe';
 import { ValidationPipe } from 'src/shared/pipes/validation.pipe';
 import { CatCreateDto } from './dto/cat-create.dto';
@@ -26,6 +29,7 @@ export class CatsController {
   }
 
   @Post()
+  @Roles('admin')
   // @UsePipes(new JoiValidationPipe(CreateCatSchema))
   async create(@Body(new ValidationPipe()) createCatDto: CatCreateDto): Promise<Cat> {
     const dto = { ...createCatDto, id: Math.floor(Math.random() * 1000000) };
@@ -33,6 +37,7 @@ export class CatsController {
   }
 
   @Get(':id')
+  @UseGuards(RolesGuard)
   findOne(
     @Param('id', new CustomParseIntPipe()) id: number,
     //@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number,
