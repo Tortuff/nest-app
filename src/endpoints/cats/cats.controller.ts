@@ -9,7 +9,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CatsService } from 'src/cats/cats.service';
+import { CatsService } from 'src/endpoints/cats/cats.service';
 import { HttpExceptionFilter } from 'src/shared/filters/http-exception.filter';
 import { RolesGuard } from 'src/shared/guards/roles.guard';
 import { LoggingInterceptor } from 'src/shared/interseptors/logging.interceptor';

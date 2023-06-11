@@ -1,5 +1,5 @@
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from 'src/endpoints/users/users.service';
 
 @Injectable()
 export class UserByIdPipe implements PipeTransform {
