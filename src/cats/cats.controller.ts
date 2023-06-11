@@ -21,14 +21,14 @@ import { Cat } from './interfaces/cat.interface';
 
 @Controller('cats')
 export class CatsController {
-  constructor(private catSevice: CatsService) {}
+  constructor(private catService: CatsService) {}
 
   @Get()
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(TransformInterceptor<Cat>)
   findAll(): any {
     //throw new ForbiddenException();
-    return this.catSevice.findAll();
+    return this.catService.findAll();
   }
 
   @Post()
@@ -37,7 +37,7 @@ export class CatsController {
   // @UsePipes(new JoiValidationPipe(CreateCatSchema))
   async create(@Body(new ValidationPipe()) createCatDto: CatCreateDto): Promise<Cat> {
     const dto = { ...createCatDto, id: Math.floor(Math.random() * 1000000) };
-    return this.catSevice.create(dto);
+    return this.catService.create(dto);
   }
 
   @Get(':id')
@@ -46,7 +46,7 @@ export class CatsController {
     @Param('id', new CustomParseIntPipe()) id: number,
     //@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number,
   ): Cat {
-    const cat = this.catSevice.findOne(id);
+    const cat = this.catService.findOne(id);
     if (cat === undefined) throw new BadRequestException(`Cat "${id}" is not found`);
     return cat;
     //return `This action returns a #${id} cat. Type of ID is ${typeof id}`;
