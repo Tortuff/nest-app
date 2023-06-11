@@ -26,7 +26,7 @@ export class CatsController {
   @Get()
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(TransformInterceptor<Cat>)
-  findAll(): any {
+  findAll(): Cat[] {
     //throw new ForbiddenException();
     return this.catService.findAll();
   }
